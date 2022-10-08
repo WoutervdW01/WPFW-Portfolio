@@ -2,7 +2,7 @@ using System;
 
 namespace pretpark.authenticatie
 {
-    class GebruikerService
+    public class GebruikerService
     {
 
         private iGebruikerContext gebruikerContext;
@@ -49,7 +49,7 @@ namespace pretpark.authenticatie
         }
     }
 
-    interface iGebruikerContext
+    public interface iGebruikerContext
     {
         int AantalGebruikers();
         Gebruiker GetGebruiker(int i);
@@ -57,7 +57,7 @@ namespace pretpark.authenticatie
         Gebruiker GebruikerByEmail(string Email);
     }
 
-    class GebruikerContext : iGebruikerContext
+    public class GebruikerContext : iGebruikerContext
     {
         public List<Gebruiker> gebruikers = new List<Gebruiker>();
         public int AantalGebruikers()

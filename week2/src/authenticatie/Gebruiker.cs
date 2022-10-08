@@ -1,6 +1,6 @@
 namespace pretpark.authenticatie;
 
-class Gebruiker
+public class Gebruiker
 {
     public string Wachtwoord{get; set;}
     public string Email{get; set;}
