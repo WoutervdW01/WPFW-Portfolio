@@ -1,6 +1,7 @@
 {
     "version": "0.2.0",
     "configurations": [
+        
         {
             // Use IntelliSense to find out which attributes exist for C# debugging
             // Use hover for the description of the existing attributes
@@ -39,6 +40,16 @@
             "cwd": "${workspaceFolder}",
             "stopAtEntry": false,
             "console": "externalTerminal"
+        },{
+            "name": "week4",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "buildWeek4",
+            "program": "${workspaceFolder}/week4/src/database/bin/Debug/net6.0/database.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+            "console": "internalConsole"
         },
         {
             "name": ".NET Core Attach",
