@@ -52,6 +52,18 @@
             "console": "internalConsole"
         },
         {
+            "name": "week5",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "buildWeek5",
+            "program": "${workspaceFolder}/week5/bin/Debug/net6.0/week5.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+            "console": "internalConsole"
+        },
+
+        {
             "name": ".NET Core Attach",
             "type": "coreclr",
             "request": "attach"
