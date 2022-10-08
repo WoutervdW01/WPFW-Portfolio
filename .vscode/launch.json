@@ -2,17 +2,6 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "week2Src",
-            "type": "coreclr",
-            "request": "launch",
-            "preLaunchTask": "buildWeek2Src",
-            "program": "${workspaceFolder}/week2/src/authenticatie/bin/Debug/net6.0/Authenticatie.dll",
-            "args": [],
-            "cwd": "${workspaceFolder}",
-            "stopAtEntry": false,
-            "console": "externalTerminal"
-        },
-        {
             // Use IntelliSense to find out which attributes exist for C# debugging
             // Use hover for the description of the existing attributes
             // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
@@ -27,6 +16,29 @@
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "externalTerminal",
             "stopAtEntry": false
+        },
+        {
+            "name": "week2Src",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "buildWeek2Src",
+            "program": "${workspaceFolder}/week2/src/authenticatie/bin/Debug/net6.0/Authenticatie.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+            "console": "externalTerminal"
+        },
+        
+        {
+            "name": "week3",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "buildWeek3",
+            "program": "${workspaceFolder}/week3/bin/Debug/net6.0/week3.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+            "console": "externalTerminal"
         },
         {
             "name": ".NET Core Attach",
