@@ -5,7 +5,7 @@ namespace Pretpark
 {
     class Program
     {
-        static async Task Main(string[] args)
+        static void Main(string[] args)
         {
             TcpListener server = new TcpListener(new System.Net.IPAddress(new byte[] { 127,0,0,1 }), 5000);
             server.Start();
@@ -45,8 +45,8 @@ namespace Pretpark
                 char[] bytes = new char[(int)contentLength];
                 requestLezer.Read(bytes, 0, (int)contentLength);
             }
-            Thread.Sleep(5000);
-            connectie.Send(System.Text.Encoding.ASCII.GetBytes("HTTP/1.0 200 OK\r\nContent-Type: text/plain\r\nContent-Length: 11\r\n\r\nHello World"));
+            //Thread.Sleep(5000);
+            connectie.Send(System.Text.Encoding.ASCII.GetBytes("HTTP/1.0 200 OK\r\nContent-Type: text/html; charset=UTF-8\r\nContent-Length: 106\r\n\r\n<h1>Welkom bij de website van Pretpark <a href='https://nl.wikipedia.org/wiki/Den_Haag'>Den Haag!</a></h1>"));
             Console.WriteLine(" >> [Connection Thread " + connectionCount + "] Response sent");
         }
     }
