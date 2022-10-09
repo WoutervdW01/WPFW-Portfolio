@@ -46,7 +46,19 @@ namespace Pretpark
                 requestLezer.Read(bytes, 0, (int)contentLength);
             }
             //Thread.Sleep(5000);
-            connectie.Send(System.Text.Encoding.ASCII.GetBytes("HTTP/1.0 200 OK\r\nContent-Type: text/html; charset=UTF-8\r\nContent-Length: 106\r\n\r\n<h1>Welkom bij de website van Pretpark <a href='https://nl.wikipedia.org/wiki/Den_Haag'>Den Haag!</a></h1>"));
+            //connectie.Send(System.Text.Encoding.ASCII.GetBytes("HTTP/1.0 200 OK\r\nContent-Type: text/html; charset=UTF-8\r\nContent-Length: 106\r\n\r\n<h1>Welkom bij de website van Pretpark <a href='https://nl.wikipedia.org/wiki/Den_Haag'>Den Haag!</a></h1>"));
+            
+            if(url == "/")
+            {
+                connectie.Send(System.Text.Encoding.ASCII.GetBytes("HTTP/1.0 200 OK\r\nContent-Type: text/html; charset=UTF-8\r\nContent-Length: 106\r\n\r\n<h1>Welkom bij de website van Pretpark <a href='https://nl.wikipedia.org/wiki/Den_Haag'>Den Haag!</a></h1>"));
+            } else if(url == "/contact")
+            {
+                connectie.Send(System.Text.Encoding.ASCII.GetBytes("HTTP/1.0 200 OK\r\nContent-Type: text/html; charset=UTF-8\r\nContent-Length: 16\r\n\r\n<h1>Contact</h1>"));
+            } else
+            {
+                connectie.Send(System.Text.Encoding.ASCII.GetBytes("HTTP/1.0 500\r\nContent-Type: text/html; charset=UTF-8\r\nContent-Length: 0\r\n\r\n"));
+            }
+            
             Console.WriteLine(" >> [Connection Thread " + connectionCount + "] Response sent");
         }
     }
