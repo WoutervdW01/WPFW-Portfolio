@@ -63,6 +63,16 @@ namespace Pretpark
                 int httpContentLength = 9 + teller.ToString().Length;
                 connectie.Send(System.Text.Encoding.ASCII.GetBytes("HTTP/1.0 200 OK\r\nContent-Type: text/html; charset=UTF-8\r\nContent-Length: " + httpContentLength + "\r\n\r\n<h1>"+ teller + "</h1>"));
             }
+            else if(url.Substring(0, 4) == "/add")
+            {
+                string queryParams = url.Substring(5);
+                string[] splittedQueryParams = queryParams.Split('&');
+                var a = int.Parse(splittedQueryParams[0].Split('=')[1]);
+                var b = int.Parse(splittedQueryParams[1].Split('=')[1]);
+                int result = a + b;
+                int httpContentLength = 9 + result.ToString().Length;
+                connectie.Send(System.Text.Encoding.ASCII.GetBytes("HTTP/1.0 200 OK\r\nContent-Type: text/html; charset=UTF-8\r\nContent-Length: " + httpContentLength + "\r\n\r\n<h1>"+ result + "</h1>"));
+            }
             else
             {
                 connectie.Send(System.Text.Encoding.ASCII.GetBytes("HTTP/1.0 404\r\nContent-Type: text/html; charset=UTF-8\r\nContent-Length: 0\r\n\r\n"));
