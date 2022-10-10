@@ -5,6 +5,7 @@ namespace Pretpark
 {
     class Program
     {
+        private static int teller = 0;
         static void Main(string[] args)
         {
             TcpListener server = new TcpListener(new System.Net.IPAddress(new byte[] { 127,0,0,1 }), 5000);
@@ -51,12 +52,20 @@ namespace Pretpark
             if(url == "/")
             {
                 connectie.Send(System.Text.Encoding.ASCII.GetBytes("HTTP/1.0 200 OK\r\nContent-Type: text/html; charset=UTF-8\r\nContent-Length: 106\r\n\r\n<h1>Welkom bij de website van Pretpark <a href='https://nl.wikipedia.org/wiki/Den_Haag'>Den Haag!</a></h1>"));
-            } else if(url == "/contact")
+            } 
+            else if(url == "/contact")
             {
                 connectie.Send(System.Text.Encoding.ASCII.GetBytes("HTTP/1.0 200 OK\r\nContent-Type: text/html; charset=UTF-8\r\nContent-Length: 16\r\n\r\n<h1>Contact</h1>"));
-            } else
+            } 
+            else if(url == "/teller")
             {
-                connectie.Send(System.Text.Encoding.ASCII.GetBytes("HTTP/1.0 500\r\nContent-Type: text/html; charset=UTF-8\r\nContent-Length: 0\r\n\r\n"));
+                teller++;
+                int httpContentLength = 9 + teller.ToString().Length;
+                connectie.Send(System.Text.Encoding.ASCII.GetBytes("HTTP/1.0 200 OK\r\nContent-Type: text/html; charset=UTF-8\r\nContent-Length: " + httpContentLength + "\r\n\r\n<h1>"+ teller + "</h1>"));
+            }
+            else
+            {
+                connectie.Send(System.Text.Encoding.ASCII.GetBytes("HTTP/1.0 404\r\nContent-Type: text/html; charset=UTF-8\r\nContent-Length: 0\r\n\r\n"));
             }
             
             Console.WriteLine(" >> [Connection Thread " + connectionCount + "] Response sent");
