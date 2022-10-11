@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <h1>De teller staat op <a id="count"></a> klik <a id="hier">hier</a> om te verhogen</h1>
+    </body>
+
+    <script type="text/javascript">
+        var count = 1;
+        var countHolder = document.getElementById("count");
+        updateCounter();
+        
+        document.getElementById("hier").addEventListener("click", () => {
+            count++;
+            updateCounter();
+        })
+
+
+        function updateCounter(){
+            countHolder.innerHTML = count;
+        }
+    </script>
+</html>

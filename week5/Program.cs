@@ -51,7 +51,10 @@ namespace Pretpark
             
             if(url == "/")
             {
-                connectie.Send(System.Text.Encoding.ASCII.GetBytes("HTTP/1.0 200 OK\r\nContent-Type: text/html; charset=UTF-8\r\nContent-Length: 106\r\n\r\n<h1>Welkom bij de website van Pretpark <a href='https://nl.wikipedia.org/wiki/Den_Haag'>Den Haag!</a></h1>"));
+                string page = File.ReadAllText("week5//HTML//home.html");
+                int pageLength = page.Length;
+                Console.WriteLine(page);
+                connectie.Send(System.Text.Encoding.ASCII.GetBytes("HTTP/1.0 200 OK\r\nContent-Type: text/html; charset=UTF-8\r\nContent-Length: " + pageLength + "\r\n\r\n" + page));
             } 
             else if(url == "/contact")
             {
@@ -72,6 +75,12 @@ namespace Pretpark
                 int result = a + b;
                 int httpContentLength = 9 + result.ToString().Length;
                 connectie.Send(System.Text.Encoding.ASCII.GetBytes("HTTP/1.0 200 OK\r\nContent-Type: text/html; charset=UTF-8\r\nContent-Length: " + httpContentLength + "\r\n\r\n<h1>"+ result + "</h1>"));
+            }
+            else if(url == "/mijnteller")
+            {
+                string page = File.ReadAllText("week5//HTML//mijnTeller.html");
+                int pageLength = page.Length;
+                connectie.Send(System.Text.Encoding.ASCII.GetBytes("HTTP/1.0 200 OK\r\nContent-Type: text/html; charset=UTF-8\r\nContent-Length: " + pageLength + "\r\n\r\n" + page));
             }
             else
             {
