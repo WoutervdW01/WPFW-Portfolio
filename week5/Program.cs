@@ -84,7 +84,9 @@ namespace Pretpark
             }
             else
             {
-                connectie.Send(System.Text.Encoding.ASCII.GetBytes("HTTP/1.0 404\r\nContent-Type: text/html; charset=UTF-8\r\nContent-Length: 0\r\n\r\n"));
+                string page = File.ReadAllText("week5//HTML//404.html");
+                int pageLength = page.Length;
+                connectie.Send(System.Text.Encoding.ASCII.GetBytes("HTTP/1.0 404\r\nContent-Type: text/html; charset=UTF-8\r\nContent-Length: "+ pageLength +"\r\n\r\n" + page));
             }
             
             Console.WriteLine(" >> [Connection Thread " + connectionCount + "] Response sent");
