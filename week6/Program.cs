@@ -25,8 +25,11 @@ var c = builder.Services.AddSwaggerGen(c => c.AddSecurityDefinition("Bearer", ne
     Description = "JWT Authorization header using the Bearer scheme."
 }));
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddRoles<IdentityRole>()
+                .AddRoleManager<RoleManager<IdentityRole>>()
                 .AddEntityFrameworkStores<PretparkContext>()
                 .AddDefaultTokenProviders();
+                
 
 builder.Services.AddAuthentication(opt =>
 {
