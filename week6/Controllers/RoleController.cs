@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Authorization;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -17,6 +18,7 @@ public class RoleController : ControllerBase
         _roleManager = roleManager;
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     [Route("new")]
     public async Task<ActionResult> NewRole([FromBody] RoleDTO roleDTO)
@@ -29,6 +31,7 @@ public class RoleController : ControllerBase
         return StatusCode(500);
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<IdentityRole>>> GetRole()
     {
