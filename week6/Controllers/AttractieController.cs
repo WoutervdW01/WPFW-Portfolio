@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace week6.Controllers
 {
@@ -20,6 +21,7 @@ namespace week6.Controllers
         }
 
         // GET: api/Attractie
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Attractie>>> GetAttractie()
         {
