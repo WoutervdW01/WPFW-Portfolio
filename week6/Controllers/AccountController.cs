@@ -78,4 +78,46 @@ public class AccountController : ControllerBase
 
         return Unauthorized();
     }
+    
+    // GET: api/Account/UserWithRoles
+    [HttpGet]
+    [Route("UsersWithRoles")]
+    public async Task<ActionResult<IEnumerable<GebruikerMetRoles>>> GetGebruikerMetRoles()
+    {
+        List<GebruikerMetRoles> results = new List<GebruikerMetRoles>();
+        var users = await Task.Run(() => {
+            return _pretparkContext.Users;
+        });
+        foreach(var User in users)
+        {
+            var Roles = await _userManager.GetRolesAsync(User);
+            GebruikerMetRoles gebruikerMetRoles = new GebruikerMetRoles(User.UserName);
+            foreach(var Role in Roles)
+            {
+                gebruikerMetRoles.AddRole(Role);
+            }
+            results.Add(gebruikerMetRoles);
+        }
+        return results;
+    }
+
+    // GET: api/Account/Bob/Roles
+    [HttpGet]
+    [Route("{UserName}/Roles")]
+    public async Task<ActionResult<GebruikerMetRoles>> GetGebruikerMetRoles(string UserName)
+    {
+        var _user = await _userManager.FindByNameAsync(UserName);
+        var Roles = await _userManager.GetRolesAsync(_user);
+        GebruikerMetRoles gebruikerMetRoles = new GebruikerMetRoles(UserName);
+        foreach(var Role in Roles) gebruikerMetRoles.AddRole(Role);
+        return gebruikerMetRoles;
+    }
+
+    [HttpGet]
+    [Route("GetAll")]
+    public async Task<ActionResult<IEnumerable<IdentityUser>>> GetAllUsers()
+    {
+        var users = _pretparkContext.Users.ToList();
+        return users;
+    }
 }
