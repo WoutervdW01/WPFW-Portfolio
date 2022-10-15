@@ -28,7 +28,11 @@ public class AccountController : ControllerBase
     {
         if(Role == "Admin")
         {
-            return StatusCode(400);
+            return BadRequest("You are not allowed to create new Admin users");
+        }
+        if(Role != "Medewerker" && Role != "Gast")
+        {
+            return BadRequest("Role type does not exist, you can only create users of role 'Medewerker' or 'Gast'");
         }
         var resultaat = await _userManager.CreateAsync(gebruikerMetWachwoord, gebruikerMetWachwoord.Password);
         if(resultaat.Succeeded)
