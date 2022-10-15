@@ -16,6 +16,24 @@ public class GebruikerLogin
     public string? Password{get; set;}
 }
 
+public class GebruikerMetRoles
+{
+    public string UserName{get; set;}
+    public List<string> Roles{get; set;}
+
+    public GebruikerMetRoles(string UserName)
+    {
+        this.UserName = UserName;
+        Roles = new List<string>();
+    }
+
+    public void AddRole(string Role)
+    {
+        Roles.Add(Role);
+    }
+
+}
+
 public enum Geslacht
 {
     Man,

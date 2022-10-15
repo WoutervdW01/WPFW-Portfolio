@@ -12,18 +12,26 @@ public class AccountController : ControllerBase
 {
     private readonly UserManager<IdentityUser> _userManager;
     private readonly SignInManager<IdentityUser> _signInManager;
+    private readonly PretparkContext _pretparkContext;
 
-    public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+    public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, PretparkContext pretparkContext)
     {
         _userManager = userManager;
         _signInManager = signInManager;
+        _pretparkContext = pretparkContext;
     }
 
+    // POST: api/Account/registreer?Role=
     [HttpPost]
     [Route("registreer")]
-    public async Task<ActionResult<IEnumerable<Attractie>>> Registreer([FromBody] GebruikerMetWachwoord gebruikerMetWachwoord)
+    public async Task<ActionResult<IEnumerable<Attractie>>> Registreer([FromBody] GebruikerMetWachwoord gebruikerMetWachwoord, [FromQuery] string Role)
     {
         var resultaat = await _userManager.CreateAsync(gebruikerMetWachwoord, gebruikerMetWachwoord.Password);
+        if(resultaat.Succeeded)
+        {
+            var _user = await _userManager.FindByNameAsync(gebruikerMetWachwoord.UserName);
+            await _userManager.AddToRoleAsync(_user, Role);
+        }
         return !resultaat.Succeeded ? new BadRequestObjectResult(resultaat) : StatusCode(201);
     }
 
