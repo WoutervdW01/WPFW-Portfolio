@@ -4,6 +4,10 @@ using System.ComponentModel.DataAnnotations;
 public class GebruikerMetWachwoord : IdentityUser
 {
     public string? Password{get; init;}
+}
+
+public class GebruikerMetGeslacht : IdentityUser
+{
     public Geslacht geslacht{get; set;}
 }
 
@@ -34,10 +38,14 @@ public class GebruikerMetRoles
 
 }
 
-public enum Geslacht
+public class Geslacht
 {
-    Man,
-    Vrouw,
-    Anders,
-    Geheim
+    public int Id{get; set;}
+    public string GeslachtString{get; set;}
+
+    public Geslacht(int Id, string GeslachtString)
+    {
+        this.Id = Id;
+        this.GeslachtString = GeslachtString;
+    }
 }
