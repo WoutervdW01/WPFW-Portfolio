@@ -8,7 +8,7 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<PretparkContext>(options =>
-    options.UseSqlite("Data Source=week6/week6.db"));
+    options.UseSqlite("Data Source=week6.db"));
 
 // Add services to the container.
 

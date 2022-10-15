@@ -11,6 +11,7 @@ public class GebruikerMetWachwoord
 public class GebruikerMetGeslacht : IdentityUser
 {
     public Geslacht geslacht{get; set;}
+    public IList<LikedBy>? likes{get; set;}
 }
 
 public class GebruikerLogin
