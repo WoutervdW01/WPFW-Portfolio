@@ -10,11 +10,11 @@ using System.IdentityModel.Tokens.Jwt;
 [ApiController]
 public class AccountController : ControllerBase
 {
-    private readonly UserManager<IdentityUser> _userManager;
-    private readonly SignInManager<IdentityUser> _signInManager;
+    private readonly UserManager<GebruikerMetGeslacht> _userManager;
+    private readonly SignInManager<GebruikerMetGeslacht> _signInManager;
     private readonly PretparkContext _pretparkContext;
 
-    public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, PretparkContext pretparkContext)
+    public AccountController(UserManager<GebruikerMetGeslacht> userManager, SignInManager<GebruikerMetGeslacht> signInManager, PretparkContext pretparkContext)
     {
         _userManager = userManager;
         _signInManager = signInManager;
@@ -26,15 +26,21 @@ public class AccountController : ControllerBase
     [Route("registreer")]
     public async Task<ActionResult<IEnumerable<Attractie>>> Registreer([FromBody] GebruikerMetWachwoord gebruikerMetWachwoord, [FromQuery] string Role)
     {
+        
         if(Role == "Admin")
         {
             return BadRequest("You are not allowed to create new Admin users");
         }
+        
         if(Role != "Medewerker" && Role != "Gast")
         {
             return BadRequest("Role type does not exist, you can only create users of role 'Medewerker' or 'Gast'");
         }
-        var resultaat = await _userManager.CreateAsync(gebruikerMetWachwoord, gebruikerMetWachwoord.Password);
+        GebruikerMetGeslacht gebruikerMetGeslacht = new GebruikerMetGeslacht();
+        gebruikerMetGeslacht.UserName = gebruikerMetWachwoord.UserName;
+        Geslacht geslacht = _pretparkContext.Geslacht.First(x => x.GeslachtString == gebruikerMetWachwoord.Geslacht);
+        gebruikerMetGeslacht.geslacht = geslacht;
+        var resultaat = await _userManager.CreateAsync(gebruikerMetGeslacht, gebruikerMetWachwoord.Password);
         if(resultaat.Succeeded)
         {
             var _user = await _userManager.FindByNameAsync(gebruikerMetWachwoord.UserName);
@@ -121,11 +127,17 @@ public class AccountController : ControllerBase
         return gebruikerMetRoles;
     }
 
+
+
     [HttpGet]
     [Route("GetAll")]
-    public async Task<ActionResult<IEnumerable<IdentityUser>>> GetAllUsers()
+    public async Task<ActionResult<IEnumerable<GebruikerMetGeslacht>>> GetAllUsers()
     {
-        var users = _pretparkContext.Users.ToList();
+        var users = _userManager.Users.ToList(); 
+        foreach (var User in users)
+        {
+            Console.WriteLine(" >>> " + User.geslacht);
+        }
         return users;
     }
 }

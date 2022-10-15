@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
-    public class PretparkContext : IdentityDbContext
+    public class PretparkContext : IdentityDbContext<GebruikerMetGeslacht>
     {
         public PretparkContext (DbContextOptions<PretparkContext> options)
             : base(options)
@@ -22,5 +22,6 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
         }
 
         public DbSet<Attractie> Attractie { get; set; } = default!;
-        public DbSet<GebruikerMetGeslacht> GebruikerMetGeslacht {get; set;} = default!;
+        //public DbSet<GebruikerMetGeslacht> GebruikerMetGeslacht {get; set;} = default!;
+        public DbSet<Geslacht> Geslacht {get; set; } = default!;
     }

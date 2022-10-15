@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 
-public class GebruikerMetWachwoord : IdentityUser
+public class GebruikerMetWachwoord
 {
+    public string? UserName{get; set;}
     public string? Password{get; init;}
+    public string? Geslacht{get; set;}
 }
 
 public class GebruikerMetGeslacht : IdentityUser
