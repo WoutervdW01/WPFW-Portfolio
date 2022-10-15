@@ -26,6 +26,10 @@ public class AccountController : ControllerBase
     [Route("registreer")]
     public async Task<ActionResult<IEnumerable<Attractie>>> Registreer([FromBody] GebruikerMetWachwoord gebruikerMetWachwoord, [FromQuery] string Role)
     {
+        if(Role == "Admin")
+        {
+            return StatusCode(400);
+        }
         var resultaat = await _userManager.CreateAsync(gebruikerMetWachwoord, gebruikerMetWachwoord.Password);
         if(resultaat.Succeeded)
         {
