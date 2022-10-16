@@ -10,7 +10,7 @@ class DemografischRapport : Rapport
     
     public override async Task<string> Genereer()
     {
-        /*
+        
         string ret = "Dit is een demografisch rapport: \n";
         ret += $"Er zijn in totaal { await AantalGebruikers() } gebruikers van dit platform (dat zijn gasten en medewerkers)\n";
         var dateTime = new DateTime(2000, 1, 1);
@@ -20,20 +20,21 @@ class DemografischRapport : Rapport
         else
             ret += "Niet alle gasten hebben een reservering\n";
         ret += $"Het percentage bejaarden is { await PercentageBejaarden() }\n";
+        /*
 
         ret += $"De oudste gast heeft een leeftijd van { await HoogsteLeeftijd() } \n";
 
         ret += "De verdeling van de gasten per dag is als volgt: \n";
+        /*
         var dagAantallen = await VerdelingPerDag();
         var totaal = dagAantallen.Select(t => t.aantal).Max();
         foreach (var dagAantal in dagAantallen)
             ret += $"{ dagAantal.dag }: { new string('#', (int)(dagAantal.aantal / (double)totaal * 20)) }\n";
 
         ret += $"{ await FavorietCorrect() } gasten hebben de favoriete attractie inderdaad het vaakst bezocht. \n";
+        */
 
         return ret;
-        */
-        return "hoi";
     }
     private async Task<int> AantalGebruikers() => context.gebruikers.Count();
     
@@ -66,6 +67,7 @@ class DemografischRapport : Rapport
         return percentage;
     }) ;
     
+    /*
     private async Task<int> HoogsteLeeftijd() => await Task<int>.Run(() => {
         var minDateTime = context.gasten.Min(g => g.GeboorteDatum);
         int age = EF.Functions.DateDiffYear(minDateTime, DateTime.Today);
