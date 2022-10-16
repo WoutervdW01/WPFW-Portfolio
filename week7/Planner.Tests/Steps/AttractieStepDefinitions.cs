@@ -35,12 +35,26 @@ public sealed class AttractieStepDefinitions
         await _databaseData.Context.SaveChangesAsync();
     }
 
+    [Given("attractie met Id = (.*) bestaat niet")]
+    public void AttractieBestaatNiet(int id)
+    {
+
+    }
+
     [When("attractie (.*) wordt toegevoegd")]
     public async Task AttractieToevoegen(string naam)
     {
         var request = new RestRequest("api/Attracties").AddJsonBody(new { Naam = naam, Reserveringen = new List<string>() });
         response = await _client.ExecutePostAsync(request);
     }
+
+    [When("attractie met Id = (.*) wordt verwijderd")]
+    public async Task AttractieVerwijderen(int id)
+    {
+        var request = new RestRequest("api/Attracties/" + id);
+        response = await _client.DeleteAsync(request);
+    }
+
 
     [Then("moet er een error (.*) komen")]
     public void Error(int httpCode)
