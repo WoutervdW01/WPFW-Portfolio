@@ -10,6 +10,8 @@ class DatabaseContext : DbContext
     public DbSet<DateTimeBereik> dateTimeBereik{get; set;}
     public DbSet<Attractie> attracties {get; set;}
     public DbSet<Onderhoud> ondehoud{get; set;}
+    public DbSet<Reservering> reservering{get; set;}
+    public DbSet<Coordinate> coordinaat{get; set;}
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.Entity<Gebruiker>().ToTable("Gebruikers");

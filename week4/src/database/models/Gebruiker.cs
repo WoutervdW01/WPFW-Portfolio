@@ -13,6 +13,7 @@ class Gast : Gebruiker
     public DateTime EersteBezoek{get; set;}
     public Gast? Begeleidt{get; set;}
     public GastInfo gastInfo{get; set;}
+    public List<Reservering>? reservering {get; set;} = null;
 }
 
 class Medewerker : Gebruiker
