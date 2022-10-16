@@ -35,11 +35,10 @@ class DemografischRapport : Rapport
         */
         return "hoi";
     }
-    private async Task<int> AantalGebruikers() => await Task<int>.Run(() => {return context.gebruikers.Count();});
+    private async Task<int> AantalGebruikers() => context.gebruikers.Count();
     
-    private async Task<bool> AlleGastenHebbenReservering() =>  await Task<bool>.Run(() => {
-        return context.gasten.Where(gast => gast.reservering.Count() > 0).Count() == context.gasten.Count();
-        });
+    private async Task<bool> AlleGastenHebbenReservering() => 
+        context.gasten.Where(gast => gast.reservering.Count() > 0).Count() == context.gasten.Count();
     
     private async Task<int> AantalSinds(DateTime sinds) =>  await Task<int>.Run(() => {
         return context.gasten.Where(gast => gast.EersteBezoek >= sinds).Count();

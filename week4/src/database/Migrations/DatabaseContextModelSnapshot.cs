@@ -39,25 +39,6 @@ namespace database.Migrations
                     b.ToTable("attracties");
                 });
 
-            modelBuilder.Entity("pretpark.database.models.Coordinate", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("X")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Y")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("coordinaat");
-                });
-
             modelBuilder.Entity("pretpark.database.models.DateTimeBereik", b =>
                 {
                     b.Property<int>("Id")
@@ -86,17 +67,11 @@ namespace database.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("LaatstBezochteURL")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("coordinateId")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("coordinateId");
-
-                    b.ToTable("GastInfo");
+                    b.ToTable("gastInfo");
                 });
 
             modelBuilder.Entity("pretpark.database.models.Gebruiker", b =>
@@ -170,7 +145,7 @@ namespace database.Migrations
                 {
                     b.HasBaseType("pretpark.database.models.Gebruiker");
 
-                    b.Property<int?>("BegeleidtId")
+                    b.Property<int?>("BegeleiderId")
                         .HasColumnType("int");
 
                     b.Property<int>("Credits")
@@ -179,15 +154,24 @@ namespace database.Migrations
                     b.Property<DateTime>("EersteBezoek")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("FavorietId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("GeboorteDatum")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("gastInfoId")
                         .HasColumnType("int");
 
-                    b.HasIndex("BegeleidtId");
+                    b.HasIndex("BegeleiderId")
+                        .IsUnique()
+                        .HasFilter("[BegeleiderId] IS NOT NULL");
 
-                    b.HasIndex("gastInfoId");
+                    b.HasIndex("FavorietId");
+
+                    b.HasIndex("gastInfoId")
+                        .IsUnique()
+                        .HasFilter("[gastInfoId] IS NOT NULL");
 
                     b.ToTable("Gasten", (string)null);
                 });
@@ -201,13 +185,30 @@ namespace database.Migrations
 
             modelBuilder.Entity("pretpark.database.models.GastInfo", b =>
                 {
-                    b.HasOne("pretpark.database.models.Coordinate", "coordinate")
-                        .WithMany()
-                        .HasForeignKey("coordinateId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.OwnsOne("pretpark.database.models.Coordinate", "coordinate", b1 =>
+                        {
+                            b1.Property<int>("GastInfoId")
+                                .HasColumnType("int");
 
-                    b.Navigation("coordinate");
+                            b1.Property<int>("Id")
+                                .HasColumnType("int");
+
+                            b1.Property<int>("X")
+                                .HasColumnType("int");
+
+                            b1.Property<int>("Y")
+                                .HasColumnType("int");
+
+                            b1.HasKey("GastInfoId");
+
+                            b1.ToTable("coordinaat");
+
+                            b1.WithOwner()
+                                .HasForeignKey("GastInfoId");
+                        });
+
+                    b.Navigation("coordinate")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("pretpark.database.models.Onderhoud", b =>
@@ -248,9 +249,14 @@ namespace database.Migrations
 
             modelBuilder.Entity("pretpark.database.models.Gast", b =>
                 {
-                    b.HasOne("pretpark.database.models.Gast", "Begeleidt")
+                    b.HasOne("pretpark.database.models.Gast", "Begeleider")
+                        .WithOne("Begeleidt")
+                        .HasForeignKey("pretpark.database.models.Gast", "BegeleiderId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("pretpark.database.models.Attractie", "Favoriet")
                         .WithMany()
-                        .HasForeignKey("BegeleidtId");
+                        .HasForeignKey("FavorietId");
 
                     b.HasOne("pretpark.database.models.Gebruiker", null)
                         .WithOne()
@@ -259,12 +265,14 @@ namespace database.Migrations
                         .IsRequired();
 
                     b.HasOne("pretpark.database.models.GastInfo", "gastInfo")
-                        .WithMany()
-                        .HasForeignKey("gastInfoId")
+                        .WithOne("gast")
+                        .HasForeignKey("pretpark.database.models.Gast", "gastInfoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Begeleidt");
+                    b.Navigation("Begeleider");
+
+                    b.Navigation("Favoriet");
 
                     b.Navigation("gastInfo");
                 });
@@ -278,8 +286,16 @@ namespace database.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("pretpark.database.models.GastInfo", b =>
+                {
+                    b.Navigation("gast")
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("pretpark.database.models.Gast", b =>
                 {
+                    b.Navigation("Begeleidt");
+
                     b.Navigation("reservering");
                 });
 #pragma warning restore 612, 618

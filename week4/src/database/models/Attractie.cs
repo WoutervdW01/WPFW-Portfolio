@@ -16,4 +16,12 @@ class Attractie
         // TODO
         return Task.FromResult(true);
     }
+
+    public Attractie(string Naam){
+        this.Naam = Naam;
+    }
+
+    public Attractie(){
+        
+    }
 }
