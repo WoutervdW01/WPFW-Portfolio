@@ -11,3 +11,8 @@ Scenario: BestaatNiet
     Given attractie met Id = 5 bestaat niet
     When attractie met Id = 5 wordt verwijderd
     Then moet er een error 404 komen
+
+Scenario: BestaandeAttractieVerwijderen
+    Given wel attractie met Id = 12 bestaat
+    When attractie met Id = 12 wordt verwijderd
+    Then moet er status 204 komen

@@ -41,6 +41,13 @@ public sealed class AttractieStepDefinitions
 
     }
 
+    [Given("wel attractie met Id = (.*) bestaat")]
+    public async Task AttractieMetIdBestaat(int id)
+    {
+        await _databaseData.Context.Attractie.AddAsync(new Attractie { Id = id, Naam = "Attractie" });
+        await _databaseData.Context.SaveChangesAsync();
+    }
+
     [When("attractie (.*) wordt toegevoegd")]
     public async Task AttractieToevoegen(string naam)
     {
@@ -58,6 +65,12 @@ public sealed class AttractieStepDefinitions
 
     [Then("moet er een error (.*) komen")]
     public void Error(int httpCode)
+    {
+        Assert.Equal(httpCode, (int)response!.StatusCode);
+    }
+
+    [Then("moet er status (.*) komen")]
+    public void Status(int httpCode)
     {
         Assert.Equal(httpCode, (int)response!.StatusCode);
     }
